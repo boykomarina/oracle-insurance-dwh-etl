@@ -19,7 +19,7 @@ CREATE TABLE stg_claim_xml
     load_dt DATE DEFAULT SYSDATE NOT NULL,
     raw_xml XMLTYPE NOT NULL,
     is_processed NUMBER(1) DEFAULT 0 NOT NULL,
-    CONSTRAINT chk_stg_policy_processed CHECK (is_processed IN (0, 1))
+    CONSTRAINT chk_stg_claim_processed CHECK (is_processed IN (0, 1))
 );
 
 COMMENT ON TABLE stg_claim_xml IS 'Staging table for incoming claim requests in XML format. Records are processed by ETL and moved to core layer.';
