@@ -35,27 +35,27 @@ CREATE TABLE policies
     policy_id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     client_id NUMBER NOT NULL,
     agent_id NUMBER NOT NULL,
-    status VARCHAR2(20) DEFAULT 'ACTIVE' NOT NULL,
+    policy_status VARCHAR2(20) DEFAULT 'ACTIVE' NOT NULL,
        product_code    VARCHAR2(50) NOT NULL,
     premium_amount  NUMBER(12,2) NOT NULL,
-    start_date      DATE NOT NULL,
-    end_date        DATE NOT NULL,
+    policy_start_date      DATE NOT NULL,
+    policy_end_date        DATE NOT NULL,
     created_at      TIMESTAMP DEFAULT SYSTIMESTAMP NOT NULL,
-    CONSTRAINT chk_policy_status CHECK (status IN ('ACTIVE', 'CANCELLED', 'EXPIRED')),
-    CONSTRAINT chk_policy_dates CHECK (end_date > start_date),
+    CONSTRAINT chk_policy_status CHECK (policy_status IN ('ACTIVE', 'CANCELLED', 'EXPIRED')),
+    CONSTRAINT chk_policy_dates CHECK (policy_end_date > policy_start_date),
     CONSTRAINT chk_policy_premium CHECK (premium_amount > 0),
     CONSTRAINT fk_policies_client_id FOREIGN KEY (client_id) REFERENCES clients(client_id),
     CONSTRAINT fk_policies_agent_id FOREIGN KEY (agent_id) REFERENCES agents(agent_id)
 );
 
-COMMENT ON TABLE policies IS ' Storing insurance policy information, linking clients and agents, and tracking policy details such as status, premium, and coverage dates. The product_code column identifies the type of insurance product (e.g., AUTO, HOME, LIFE) associated with the policy.';
+COMMENT ON TABLE policies IS ' Storing insurance policy information, linking clients and agents, and tracking policy details such as policy_status, premium, and coverage dates. The product_code column identifies the type of insurance product (e.g., AUTO, HOME, LIFE) associated with the policy.';
 COMMENT ON COLUMN policies.policy_id IS 'Id generated automatically for each policy';
 COMMENT ON COLUMN policies.client_id IS 'Foreign key referencing the client who owns the policy';
 COMMENT ON COLUMN policies.agent_id IS 'Foreign key referencing the agent responsible for the policy';
-COMMENT ON COLUMN policies.status IS 'Current status of the policy: ACTIVE, CANCELLED, or EXPIRED';
+COMMENT ON COLUMN policies.policy_status IS 'Current policy_status of the policy: ACTIVE, CANCELLED, or EXPIRED';
 COMMENT ON COLUMN policies.premium_amount IS 'Premium amount for the policy, must be a positive value';
-COMMENT ON COLUMN policies.start_date IS 'Start date of the policy coverage';
-COMMENT ON COLUMN policies.end_date IS 'End date of the policy coverage, must be after the start date';
+COMMENT ON COLUMN policies.policy_start_date IS 'Start date of the policy coverage';
+COMMENT ON COLUMN policies.policy_end_date IS 'End date of the policy coverage, must be after the start date';
 COMMENT ON COLUMN policies.created_at IS 'Timestamp when the policy record was created in the system';
 
 
@@ -64,8 +64,8 @@ CREATE TABLE claims (
     policy_id       NUMBER NOT NULL,
     claim_date      DATE NOT NULL,
     claim_amount    NUMBER(12,2) NOT NULL,
-    status          VARCHAR2(20) DEFAULT 'PENDING' NOT NULL
-        CONSTRAINT chk_claim_status CHECK (status IN ('PENDING', 'APPROVED', 'REJECTED', 'PAID')),
+    claim_status          VARCHAR2(20) DEFAULT 'PENDING' NOT NULL
+        CONSTRAINT chk_claim_status CHECK (claim_status IN ('PENDING', 'APPROVED', 'REJECTED', 'PAID')),
     created_at      TIMESTAMP DEFAULT SYSTIMESTAMP NOT NULL,
     
     CONSTRAINT fk_claim_policy FOREIGN KEY (policy_id) REFERENCES policies(policy_id),
@@ -77,5 +77,5 @@ COMMENT ON COLUMN claims.claim_id IS 'Unique claim identifier';
 COMMENT ON COLUMN claims.policy_id IS 'Reference to policy';
 COMMENT ON COLUMN claims.claim_date IS 'Date when the insured event occurred';
 COMMENT ON COLUMN claims.claim_amount IS 'Claimed amount';
-COMMENT ON COLUMN claims.status IS 'Claim processing status';
+COMMENT ON COLUMN claims.claim_status IS 'Claim processing status';
 COMMENT ON COLUMN claims.created_at IS 'Record creation timestamp';
