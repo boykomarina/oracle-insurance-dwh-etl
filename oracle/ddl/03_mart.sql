@@ -14,6 +14,3 @@ COMMENT ON COLUMN mart_sales_summary.product_code IS 'Policy type that reference
 COMMENT ON COLUMN mart_sales_summary.policies_sold IS 'Qty of policy  sold on each date';
 COMMENT ON COLUMN mart_sales_summary.total_premium IS 'Total premium amount collected per product per day';
 COMMENT ON COLUMN mart_sales_summary.updated_at IS 'Last update of the row';
-
-
-mart_sales_summary
