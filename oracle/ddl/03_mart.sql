@@ -4,7 +4,7 @@ CREATE TABLE mart_sales_summary (
     policies_sold     NUMBER(10) NOT NULL,
     total_premium NUMBER(12,2) NOT NULL,
     updated_at    TIMESTAMP DEFAULT SYSTIMESTAMP NOT NULL,
-      CONSTRAINT pk_date_product_code PRIMARY KEY (date_key, product_code),
+      CONSTRAINT pk_date_product_code PRIMARY KEY (date_key, product_code)
     
 );
 

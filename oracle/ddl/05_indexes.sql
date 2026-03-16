@@ -8,6 +8,9 @@ CREATE INDEX idx_policies_policy_start_date ON policies(policy_start_date);
 CREATE INDEX idx_policies_policy_status ON policies(CASE WHEN policy_status = 'ACTIVE' THEN policy_status END);
 /* We are interested only in active policies */
 
+-- Mart indices
+CREATE INDEX idx_mart_sales_summary_product_code ON mart_sales_summary(product_code);
+
 
 -- Log indices
 CREATE INDEX idx_app_log_level_ts ON app_log(log_level, log_ts);
